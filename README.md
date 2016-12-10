@@ -51,5 +51,4 @@ Rack::Handler::WEBrick.run app
 # TODO
 
 - READMD
-- description of gemspec
 - DSL

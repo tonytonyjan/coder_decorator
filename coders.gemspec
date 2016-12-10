@@ -3,8 +3,8 @@ Gem::Specification.new do |s|
   s.name = 'coder_decorator'
   s.version = '0.1.0'
   s.licenses = ['MIT']
-  s.summary = 'koder'
-  s.description = 'koder'
+  s.summary = 'An encoding/decoding library with decorator pattern.'
+  s.description = 'An encoding/decoding library with decorator pattern.'
   s.author = 'Jian Weihang'
   s.email = 'tonytonyjan@gmail.com'
   s.add_development_dependency 'minitest'
