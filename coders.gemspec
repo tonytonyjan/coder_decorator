@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.author = 'Jian Weihang'
   s.files = Dir['lib/**/*.rb']
   s.email = 'tonytonyjan@gmail.com'
+  s.required_ruby_version = '>= 2.2.0'
   s.add_development_dependency 'minitest'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rubocop'
