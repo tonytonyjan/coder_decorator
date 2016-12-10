@@ -39,8 +39,8 @@ class TestCoders < Minitest::Test
   end
 
   def test_it_can_decorate
-    coder = Coders::Base64.new(Coders::Marshal.new)
-    data = { name: 'tonytonyjan', length: 30 }
+    coder = Coders::Base64.new(Coders::Marshal.new(Coders::JSON.new))
+    data = {'name' => 'tonytonyjan', 'length' => 30}
     assert_equal data, coder.decode(coder.encode(data))
   end
 end
