@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 require 'minitest/autorun'
-require 'coders/json'
+require 'coder_decorator/coders/json'
 
 class TestJSON < Minitest::Test
+  include CoderDecorator
   def setup
     @coder = Coders::JSON.new
   end
@@ -19,7 +20,7 @@ class TestJSON < Minitest::Test
   end
 
   def test_raise_error_if_it_cant_decode
-    assert_raises Coders::InvalidEncoding do
+    assert_raises CoderDecorator::InvalidEncoding do
       @coder.decode('invalid JSON')
     end
   end

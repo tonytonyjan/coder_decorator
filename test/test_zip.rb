@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 require 'minitest/autorun'
-require 'coders/zip'
+require 'coder_decorator/coders/zip'
 
 class TestZip < Minitest::Test
+  include CoderDecorator
   def setup
     @coder = Coders::Zip.new
   end
@@ -19,7 +20,7 @@ class TestZip < Minitest::Test
   end
 
   def test_raise_error_if_it_cant_decode
-    assert_raises Coders::InvalidEncoding do
+    assert_raises CoderDecorator::InvalidEncoding do
       @coder.decode('invalid Zip')
     end
   end

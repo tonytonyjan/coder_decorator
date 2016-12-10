@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 require 'minitest/autorun'
-require 'coders/marshal'
+require 'coder_decorator/coders/marshal'
 
 class TestMarshal < Minitest::Test
+  include CoderDecorator
   def setup
     @coder = Coders::Marshal.new
   end
@@ -19,7 +20,7 @@ class TestMarshal < Minitest::Test
   end
 
   def test_raise_error_if_it_cant_decode
-    assert_raises Coders::InvalidEncoding do
+    assert_raises CoderDecorator::InvalidEncoding do
       @coder.decode('invalid Marshal')
     end
   end

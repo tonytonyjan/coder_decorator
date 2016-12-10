@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 Gem::Specification.new do |s|
-  s.name = 'coders'
+  s.name = 'coder_decorator'
   s.version = '0.1.0'
   s.licenses = ['MIT']
   s.summary = 'koder'
