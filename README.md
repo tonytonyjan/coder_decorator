@@ -1,6 +1,6 @@
 # CoderDecorator [![Build Status](https://travis-ci.org/tonytonyjan/coder_decorator.svg?branch=master)](https://travis-ci.org/tonytonyjan/coder_decorator)
 
-It's a encoding/decoding library for Ruby. It's designed with [decorator pattern](https://en.wikipedia.org/wiki/Decorator_pattern), which makes it more flexible, and can be wrapped infinitely using Ruby instantiation.
+It's a encoding/decoding library for Ruby designed with [decorator pattern](https://en.wikipedia.org/wiki/Decorator_pattern), which makes it more flexible, and can be wrapped infinitely using Ruby instantiation.
 
 # Install
 
