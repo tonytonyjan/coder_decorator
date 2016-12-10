@@ -9,6 +9,7 @@ desc 'Run linter and tests'
 task default: %i(rubocop test)
 
 RDoc::Task.new do |t|
+  t.main = 'README.md'
   t.rdoc_dir = 'doc'
   t.rdoc_files.include('README.md', 'lib/**/*.rb')
 end
