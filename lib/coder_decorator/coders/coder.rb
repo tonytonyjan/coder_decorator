@@ -25,6 +25,8 @@ module CoderDecorator
     #     end
     #
     class Coder < BasicObject
+      DELEGATE = %i(raise respond_to? respond_to_missing?).freeze
+
       # Can optionally pass a base coder which is going to be decorated.
       def initialize(coder = nil)
         @_coder = coder
@@ -44,8 +46,15 @@ module CoderDecorator
         ::Kernel.raise ::NotImplementedError
       end
 
-      def raise(*args)
-        ::Kernel.raise(*args)
+      private
+
+      def method_missing(name, *args, &block)
+        super unless DELEGATE.include? name
+        ::Kernel.send(name, *args, &block)
+      end
+
+      def respond_to_missing?(name, include_private = false)
+        DELEGATE.include?(name) || super
       end
     end
 
