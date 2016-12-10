@@ -56,7 +56,7 @@ end
 Rack::Handler::WEBrick.run app
 ```
 
-All built-in coders are listed in [lib/coder_decorator/coders](/tonytonyjan/coder_decorator/tree/master/lib/coder_decorator/coders)
+All built-in coders are listed in [lib/coder_decorator/coders](lib/coder_decorator/coders)
 
 # TODO
 
