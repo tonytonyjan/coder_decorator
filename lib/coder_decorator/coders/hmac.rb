@@ -25,7 +25,8 @@ module CoderDecorator
       end
 
       def decode(str)
-        data, hmac = REGEXP.match(str)&.captures
+        match_data = REGEXP.match(str)
+        data, hmac = match_data && match_data.captures
         raise InvalidEncoding unless data && hmac && secure_compare(hmac, generate_hmac(data))
         coder.decode(data)
       end
