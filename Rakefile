@@ -3,10 +3,14 @@ require 'rubocop/rake_task'
 require 'rake/testtask'
 require 'rake/packagetask'
 require 'rubygems/package_task'
+require 'rdoc/task'
 
 desc 'Run linter and tests'
 task default: %i(rubocop test)
 
+RDoc::Task.new do |t|
+  t.rdoc_dir = 'doc'
+end
 RuboCop::RakeTask.new
 Rake::TestTask.new do |t|
   t.libs << 'test'
