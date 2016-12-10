@@ -1,6 +1,14 @@
 # CoderDecorator
 
-# Usage
+It's a encoding/decoding library for Ruby. It's designed with [decorator pattern](https://en.wikipedia.org/wiki/Decorator_pattern), which makes it more flexible, and can be wrapped infinitely using Ruby instantiation.
+
+# Install
+
+```
+gem install 'coder_decorator'
+```
+
+# Example
 
 Encode data with Marshal and Base64:
 
@@ -48,7 +56,8 @@ end
 Rack::Handler::WEBrick.run app
 ```
 
+All built-in coders are listed in [lib/coder_decorator/coders](/tonytonyjan/coder_decorator/tree/master/lib/coder_decorator/coders)
+
 # TODO
 
-- READMD
 - DSL
