@@ -18,6 +18,6 @@ Rake::TestTask.new do |t|
   t.libs << 'test'
 end
 
-spec_path = File.expand_path('../coders.gemspec', __FILE__)
+spec_path = File.expand_path('../coder_decorator.gemspec', __FILE__)
 spec = Gem::Specification.load(spec_path)
 Gem::PackageTask.new(spec).define
