@@ -15,7 +15,7 @@ module CoderDecorator
       def initialize(coder = nil, secret:, digest: 'SHA1')
         super(coder)
         @secret = secret
-        @digest = OpenSSL::Digest.new(digest)
+        @digest = ::OpenSSL::Digest.new(digest)
       end
 
       def encode(str)
@@ -33,7 +33,7 @@ module CoderDecorator
       private
 
       def generate_hmac(str)
-        OpenSSL::HMAC.hexdigest(@digest.new, @secret, str)
+        ::OpenSSL::HMAC.hexdigest(@digest.new, @secret, str)
       end
 
       def secure_compare(a, b)
