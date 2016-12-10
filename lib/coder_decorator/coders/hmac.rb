@@ -12,29 +12,31 @@ module CoderDecorator
     class HMAC < Coder
       REGEXP = /\A(.*)--(.*)\z/
 
-      def initialize(coder = nil, secret:, digest: 'SHA1')
+      def initialize(coder = nil, secret:, old_secret: nil, digest: 'SHA1')
         super(coder)
         @secret = secret
+        @old_secret = old_secret
         @digest = ::OpenSSL::Digest.new(digest)
       end
 
       def encode(str)
         data = coder.encode(str)
-        hmac = generate_hmac(data)
+        hmac = generate_hmac(@secret, data)
         "#{data}--#{hmac}"
       end
 
       def decode(str)
         match_data = REGEXP.match(str)
         data, hmac = match_data && match_data.captures
-        raise InvalidEncoding unless data && hmac && secure_compare(hmac, generate_hmac(data))
+        secrets = [@secret, @old_secret]
+        raise InvalidEncoding unless data && hmac && secrets.any? { |secret| secure_compare(hmac, generate_hmac(secret, data)) }
         coder.decode(data)
       end
 
       private
 
-      def generate_hmac(str)
-        ::OpenSSL::HMAC.hexdigest(@digest.new, @secret, str)
+      def generate_hmac(secret, str)
+        ::OpenSSL::HMAC.hexdigest(@digest.new, secret, str)
       end
 
       def secure_compare(a, b)

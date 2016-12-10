@@ -26,4 +26,13 @@ class TestHMAC < Minitest::Test
       @coder.decode('invalid encoding')
     end
   end
+
+  def test_key_rotation
+    str = 'hello world'
+    secret = 'x' * 100
+    coder = Coders::HMAC.new secret: secret
+    encoded = coder.encode(str)
+    new_coder = Coders::HMAC.new secret: 'new secret', old_secret: secret
+    assert_equal str, new_coder.decode(encoded)
+  end
 end

@@ -10,9 +10,10 @@ module CoderDecorator
     #     "#{encrypted_data}--#{initial_vector}"
     #
     class Cipher < Coder
-      def initialize(coder = nil, secret:, cipher: 'AES-256-CBC')
+      def initialize(coder = nil, secret:, old_secret: nil, cipher: 'AES-256-CBC')
         super(coder)
         @secret = secret
+        @old_secret = old_secret
         @cipher = ::OpenSSL::Cipher.new(cipher)
         @base64 = Coders::Base64.new
       end
@@ -27,15 +28,24 @@ module CoderDecorator
       end
 
       def decode(str)
-        encrypted_data, iv = @base64.decode(str).split('--').map! { |v| @base64.decode(v) }
-        @cipher.decrypt
-        @cipher.key = @secret
-        @cipher.iv  = iv
-        begin
-          coder.decode(@cipher.update(encrypted_data) << @cipher.final)
-        rescue ::OpenSSL::Cipher::CipherError
-          raise InvalidEncoding
+        [@secret, @old_secret].each do |secret|
+          begin
+            return decrypt(secret, str)
+          rescue ::OpenSSL::Cipher::CipherError, ::TypeError
+            next
+          end
         end
+        raise InvalidEncoding
+      end
+
+      private
+
+      def decrypt(secret, data)
+        encrypted_data, iv = @base64.decode(data).split('--').map! { |v| @base64.decode(v) }
+        @cipher.decrypt
+        @cipher.key = secret
+        @cipher.iv  = iv
+        coder.decode(@cipher.update(encrypted_data) << @cipher.final)
       end
     end
   end
