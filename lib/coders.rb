@@ -6,21 +6,8 @@ module Coders
   # It's designed with decorator pattern, which makes it more flexible,
   # and can be wrapped infinitely using Ruby instantiation.
   #
-  # Example of encode data in Marshal and Base64:
-  #
-  #     coder = Coders::Base64.new(Coders::Marshal.new)
-  #     encoded_data = coder.encode(data)
-  #     coder.decode(encoded_data)
-  #
-  # Example of encode data in JSON and Zip:
-  #
-  #     coder = Coders::Zip.new(Coders::JSON.new)
-  #     encoded_data = coder.encode(data)
-  #     coder.decode(encoded_data)
-  #
   # To implement a custom coder decorator, inherit from Coders::Coder, and use
-  # +coder.encode+, +coder.decode+ to get results from base coder
-  # instance, for example:
+  # +coder.encode+, +coder.decode+ to get results from base coder:
   #
   #    class Reverse < Coders::Coder
   #       def encode(str); coder.encode(str).reverse; end
@@ -28,9 +15,9 @@ module Coders
   #    end
   #    coder = Reverse.new(Coder::Base64.new)
   #
-  # If you also want to customize options, be sure to call super, for example:
+  # If you want to customize options, be sure to call super:
   #
-  #     class Foo < Coders::Coder
+  #     class MyCoder < Coders::Coder
   #       def initialize(gueset_coder, options = {})
   #         super(guest_coder)
   #         @options = options
