@@ -10,6 +10,7 @@ task default: %i(rubocop test)
 
 RDoc::Task.new do |t|
   t.rdoc_dir = 'doc'
+  t.rdoc_files.include('README.md', 'lib/**/*.rb')
 end
 RuboCop::RakeTask.new
 Rake::TestTask.new do |t|
