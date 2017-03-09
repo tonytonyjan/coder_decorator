@@ -62,4 +62,4 @@ All built-in coders are listed in [lib/coder_decorator/coders](lib/coder_decorat
 
 # TODO
 
-- DSL
+- Documentation for `CoderDecorator::Builder`
