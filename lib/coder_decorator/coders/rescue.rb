@@ -2,7 +2,7 @@
 require 'coder_decorator/coders/coder'
 module CoderDecorator
   module Coders
-    # When there's exception raised, it rescues and return +nil+.
+    # When there's exception raised, it rescues and returns +nil+.
     class Rescue < Coder # :nodoc:
       def encode(obj)
         coder.encode(obj)
