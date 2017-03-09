@@ -24,11 +24,4 @@ class TestBuilder < Minitest::Test
     end
     assert_match(/but 123 was given/, exception.message)
   end
-
-  def test_wrong_coder_name
-    exception = assert_raises RuntimeError do
-      CoderDecorator::Builder.build(:wrong_coder_name)
-    end
-    assert_match(/"wrong_coder_name" doesn't exist/, exception.message)
-  end
 end
