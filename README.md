@@ -45,8 +45,8 @@ app = lambda do |env|
   [200, {}, [session[:count].to_s]]
 end
 
-encrypted_coder = Coders::Cipher.new(Coders::Marshal.new, secret: 'x'  *100)
-signed_coder = Coders::HMAC.new(encrypted_coder, secret: 'y' * 100)
+encrypted_coder = Coders::Cipher.new(Coders::Marshal.new, secret: 'x' * 32)
+signed_coder = Coders::HMAC.new(encrypted_coder, secret: 'y' * 32)
 coder = Coders::Rescue.new(signed_coder)
 
 app = Rack::Builder.app(app) do
