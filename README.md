@@ -59,7 +59,3 @@ Rack::Handler::WEBrick.run app
 ```
 
 All built-in coders are listed in [lib/coder_decorator/coders](lib/coder_decorator/coders)
-
-# TODO
-
-- Documentation for `CoderDecorator::Builder`
