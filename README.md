@@ -10,12 +10,13 @@ This gem can refers to [this pull request](https://github.com/rack/rack/pull/113
 gem install 'coder_decorator'
 ```
 
-# Example
+# Usage
 
 Encode data with Marshal and Base64:
 
 ```ruby
-require 'coder_decorator'
+require 'coder_decorator/coders/base64'
+require 'coder_decorator/coders/marshal'
 include CoderDecorator
 coder = Coders::Base64.new(Coders::Marshal.new)
 encoded_data = coder.encode(data)
@@ -25,18 +26,52 @@ coder.decode(encoded_data)
 Encode data with JSON and Zip:
 
 ```ruby
-require 'coder_decorator'
+require 'coder_decorator/coders/json'
+require 'coder_decorator/coders/zip'
 include CoderDecorator
 coder = Coders::Zip.new(Coders::JSON.new)
 encoded_data = coder.encode(data)
 coder.decode(encoded_data)
 ```
 
-Use with Rack:
+To load all coders and utils, simple do:
+
+```ruby
+require 'coder_decorator'
+```
+
+All built-in coders are listed in [lib/coder_decorator/coders](lib/coder_decorator/coders).
+
+## Use `CoderDecorator::Builder` to construct coders:
+
+`CoderDecorator::Builder` provides a convenient interface to build a coder by passing arguments instead of tediously initializing and wrapping coders, for example:
+
+```ruby
+require 'coder_decorator/builder'
+CoderDecorator::Builder.build(:marshal, :base64)
+```
+
+is equivalent to:
+
+```ruby
+require 'coder_decorator/coders/marshal'
+require 'coder_decorator/coders/base64'
+CoderDecorator::Coders::Marshal.new(CoderDecorator::Coders::Base64.new)
+```
+
+Use array to pass arguments to the coder:
+
+```ruby
+CoderDecorator::Builder.build(:marshal, [:base64, {strict: true}])
+```
+
+Use `CoderDecorator.coder_names` to see all available coder names.
+
+## Integration with Rack
 
 ```ruby
 require 'rack'
-require 'coder_decorator'
+require 'coder_decorator/builder'
 
 include CoderDecorator
 
@@ -47,9 +82,12 @@ app = lambda do |env|
   [200, {}, [session[:count].to_s]]
 end
 
-encrypted_coder = Coders::Cipher.new(Coders::Marshal.new, secret: 'x' * 32)
-signed_coder = Coders::HMAC.new(encrypted_coder, secret: 'y' * 32)
-coder = Coders::Rescue.new(signed_coder)
+coder = CoderDecorator::Builder.build(
+  :marshal,
+  [:cipher, {secret: 'x' * 32}],
+  [:hmac, {secret: 'y' * 32}],
+  :rescue
+)
 
 app = Rack::Builder.app(app) do
   use Rack::Session::Cookie, coder: coder, let_coder_handle_secure_encoding: true
@@ -57,5 +95,3 @@ end
 
 Rack::Handler::WEBrick.run app
 ```
-
-All built-in coders are listed in [lib/coder_decorator/coders](lib/coder_decorator/coders)
