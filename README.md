@@ -42,7 +42,7 @@ require 'coder_decorator'
 
 All built-in coders are listed in [lib/coder_decorator/coders](lib/coder_decorator/coders).
 
-## Use `CoderDecorator::Builder` to construct coders:
+## Use `CoderDecorator::Builder` to construct coders
 
 `CoderDecorator::Builder` provides a convenient interface to build a coder by passing arguments instead of tediously initializing and wrapping coders, for example:
 
