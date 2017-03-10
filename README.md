@@ -1,4 +1,4 @@
-# CoderDecorator [![Build Status](https://travis-ci.org/tonytonyjan/coder_decorator.svg?branch=master)](https://travis-ci.org/tonytonyjan/coder_decorator)
+# CoderDecorator [![Build Status](https://travis-ci.org/tonytonyjan/coder_decorator.svg?branch=master)](https://travis-ci.org/tonytonyjan/coder_decorator) [![Yard Docs](https://img.shields.io/badge/yard-doc-blue.svg)](http://www.rubydoc.info/gems/coder_decorator/1.1.0)
 
 It's a encoding/decoding library for Ruby designed with [decorator pattern](https://en.wikipedia.org/wiki/Decorator_pattern), which makes it more flexible, and can be wrapped infinitely using Ruby instantiation.
 
