@@ -34,7 +34,7 @@ encoded_data = coder.encode(data)
 coder.decode(encoded_data)
 ```
 
-To load all coders and utils, simple do:
+To load all coders and utilities, simply do:
 
 ```ruby
 require 'coder_decorator'
