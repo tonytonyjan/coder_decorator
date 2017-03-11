@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.summary = 'An encoding/decoding library with decorator pattern.'
   s.description = 'An encoding/decoding library with decorator pattern.'
   s.author = 'Jian Weihang'
-  s.files = Dir['lib/**/*.rb']
+  s.files = Dir['lib/**/*.rb', 'README.md']
   s.email = 'tonytonyjan@gmail.com'
   s.required_ruby_version = '>= 2.2.0'
   s.add_development_dependency 'minitest', '~> 5.10.1'
