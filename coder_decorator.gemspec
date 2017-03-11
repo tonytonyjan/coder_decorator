@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = 'coder_decorator'
-  s.version = '1.1.0'
+  s.version = '1.1.1'
   s.licenses = ['MIT']
   s.summary = 'An encoding/decoding library with decorator pattern.'
   s.description = 'An encoding/decoding library with decorator pattern.'
