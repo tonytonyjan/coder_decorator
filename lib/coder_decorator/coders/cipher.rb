@@ -28,14 +28,15 @@ module CoderDecorator
       end
 
       def decode(str)
+        exception = nil
         [@secret, @old_secret].each do |secret|
           begin
             return decrypt(secret, str)
-          rescue ::OpenSSL::Cipher::CipherError, ::TypeError
+          rescue => exception
             next
           end
         end
-        raise InvalidEncoding
+        raise exception
       end
 
       private
