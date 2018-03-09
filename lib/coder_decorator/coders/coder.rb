@@ -24,9 +24,7 @@ module CoderDecorator
     #       end
     #     end
     #
-    class Coder < BasicObject
-      DELEGATE = %i(raise respond_to? respond_to_missing?).freeze
-
+    class Coder
       # Can optionally pass a base coder which is going to be decorated.
       def initialize(coder = nil)
         @_coder = coder
@@ -37,28 +35,17 @@ module CoderDecorator
       end
 
       def encode(_obj)
-        ::Kernel.raise ::NotImplementedError
+        raise NotImplementedError
       end
 
       # It decodes +_obj+, returning decoded data,
       # or +nil+ if it can't decode.
       def decode(_obj)
-        ::Kernel.raise ::NotImplementedError
-      end
-
-      private
-
-      def method_missing(name, *args, &block)
-        super unless DELEGATE.include? name
-        ::Kernel.send(name, *args, &block)
-      end
-
-      def respond_to_missing?(name, include_private = false)
-        DELEGATE.include?(name) || super
+        raise NotImplementedError
       end
     end
 
-    class Null < BasicObject # :nodoc:
+    class Null # :nodoc:
       def encode(obj)
         obj
       end
