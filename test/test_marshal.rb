@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require 'minitest/autorun'
-require 'coder_decorator/coders/marshal'
+require 'coder_decorator'
 
 class TestMarshal < Minitest::Test
   include CoderDecorator

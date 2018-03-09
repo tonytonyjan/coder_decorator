@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require 'minitest/autorun'
-require 'coder_decorator/coders/json'
+require 'coder_decorator'
 
 class TestJSON < Minitest::Test
   include CoderDecorator

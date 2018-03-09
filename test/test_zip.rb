@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require 'minitest/autorun'
-require 'coder_decorator/coders/zip'
+require 'coder_decorator'
 
 class TestZip < Minitest::Test
   include CoderDecorator

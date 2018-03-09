@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require 'minitest/autorun'
-require 'coder_decorator/coders/cipher'
+require 'coder_decorator'
 
 class TestCipher < Minitest::Test
   include CoderDecorator

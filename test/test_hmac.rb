@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 require 'minitest/autorun'
-require 'coder_decorator/coders/hmac'
+require 'coder_decorator'
 
 class TestHMAC < Minitest::Test
   include CoderDecorator
