@@ -25,13 +25,11 @@ module CoderDecorator
     #     end
     #
     class Coder
+      attr_reader :coder
+
       # Can optionally pass a base coder which is going to be decorated.
       def initialize(coder = nil)
-        @_coder = coder
-      end
-
-      def coder
-        @_coder ||= Null.new
+        @coder = coder || Null.new
       end
 
       def encode(_obj)
