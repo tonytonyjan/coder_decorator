@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'coder_decorator/errors'
+
 module CoderDecorator
   module Coders
     # The abstract class of coder, must implement #encode and #decode.
