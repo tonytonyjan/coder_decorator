@@ -30,7 +30,7 @@ module CoderDecorator
 
       def decode(str)
         match_data = REGEXP.match(str)
-        data, hmac = match_data&.captures
+        data, hmac = match_data.captures if match_data
         secrets = [@secret, @old_secret]
         raise InvalidSignature unless data && hmac && secrets.any? { |secret| secure_compare(hmac, generate_hmac(secret, data)) }
         coder.decode(data)
@@ -42,7 +42,7 @@ module CoderDecorator
         ::OpenSSL::HMAC.hexdigest(@digest.new, secret, str)
       end
 
-      def secure_compare(a, b)
+      def secure_compare(a, b) # rubocop:disable Naming/UncommunicativeMethodParamName
         return false unless a.bytesize == b.bytesize
         l = a.unpack('C*')
         r = 0
