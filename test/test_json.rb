@@ -18,10 +18,4 @@ class TestJSON < Minitest::Test
     json = JSON.dump obj
     assert_equal JSON.parse(json), @coder.decode(json)
   end
-
-  def test_raise_error_if_it_cant_decode
-    assert_raises CoderDecorator::InvalidEncoding do
-      @coder.decode('invalid JSON')
-    end
-  end
 end

@@ -31,10 +31,4 @@ class TestBase64 < Minitest::Test
     base64 = ::Base64.encode64(str)
     assert_equal ::Base64.decode64(base64), @nonstrict_coder.decode(base64)
   end
-
-  def test_raise_error_if_it_cant_decode
-    assert_raises CoderDecorator::InvalidEncoding do
-      @coder.decode('invalid Base64')
-    end
-  end
 end

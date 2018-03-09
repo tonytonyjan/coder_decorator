@@ -10,8 +10,6 @@ module CoderDecorator
 
       def decode(str)
         coder.decode(::JSON.parse(str))
-      rescue ::JSON::ParserError
-        raise InvalidEncoding
       end
     end
   end

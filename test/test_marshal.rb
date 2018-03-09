@@ -18,10 +18,4 @@ class TestMarshal < Minitest::Test
     marshal = Marshal.dump(obj)
     assert_equal(Marshal.load(marshal), @coder.decode(marshal))
   end
-
-  def test_raise_error_if_it_cant_decode
-    assert_raises CoderDecorator::InvalidEncoding do
-      @coder.decode('invalid Marshal')
-    end
-  end
 end

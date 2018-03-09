@@ -10,8 +10,6 @@ module CoderDecorator
 
       def decode(str)
         coder.decode(::Zlib::Inflate.inflate(str))
-      rescue ::Zlib::DataError
-        raise InvalidEncoding
       end
     end
   end

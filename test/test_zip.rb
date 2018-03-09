@@ -18,10 +18,4 @@ class TestZip < Minitest::Test
     zip = ::Zlib::Deflate.deflate(str)
     assert_equal ::Zlib::Inflate.inflate(zip), @coder.decode(zip)
   end
-
-  def test_raise_error_if_it_cant_decode
-    assert_raises CoderDecorator::InvalidEncoding do
-      @coder.decode('invalid Zip')
-    end
-  end
 end

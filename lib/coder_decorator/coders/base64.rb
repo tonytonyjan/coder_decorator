@@ -14,8 +14,6 @@ module CoderDecorator
 
       def decode(str)
         coder.decode(str.unpack(@template_str).first)
-      rescue ::ArgumentError
-        raise InvalidEncoding
       end
     end
   end

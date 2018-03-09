@@ -14,12 +14,6 @@ class TestCipher < Minitest::Test
     assert_equal str, @coder.decode(encoded)
   end
 
-  def test_raise_error_if_it_cant_decode
-    assert_raises CoderDecorator::InvalidEncoding do
-      @coder.decode('invalid encoding')
-    end
-  end
-
   def test_key_rotation
     str = 'hello world'
     secret = 'x' * 32

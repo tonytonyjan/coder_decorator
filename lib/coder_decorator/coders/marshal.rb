@@ -1,5 +1,7 @@
 # frozen_string_literal: true
+
 require 'coder_decorator/coders/coder'
+
 module CoderDecorator
   module Coders
     class Marshal < Coder # :nodoc:
@@ -9,8 +11,6 @@ module CoderDecorator
 
       def decode(str)
         coder.decode(::Marshal.load(str))
-      rescue ::TypeError
-        raise InvalidEncoding
       end
     end
   end
