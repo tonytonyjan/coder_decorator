@@ -15,8 +15,7 @@ gem install 'coder_decorator'
 Encode data with Marshal and Base64:
 
 ```ruby
-require 'coder_decorator/coders/base64'
-require 'coder_decorator/coders/marshal'
+require 'coder_decorator'
 include CoderDecorator
 coder = Coders::Base64.new(Coders::Marshal.new)
 encoded_data = coder.encode(data)
@@ -26,52 +25,20 @@ coder.decode(encoded_data)
 Encode data with JSON and Zip:
 
 ```ruby
-require 'coder_decorator/coders/json'
-require 'coder_decorator/coders/zip'
+require 'coder_decorator'
 include CoderDecorator
 coder = Coders::Zip.new(Coders::JSON.new)
 encoded_data = coder.encode(data)
 coder.decode(encoded_data)
 ```
 
-To load all coders and utilities, simply do:
-
-```ruby
-require 'coder_decorator'
-```
-
-All built-in coders are listed in [lib/coder_decorator/coders](lib/coder_decorator/coders).
-
-## Use `CoderDecorator::Builder` to construct coders
-
-`CoderDecorator::Builder` provides a convenient interface to build a coder by passing arguments instead of tediously initializing and wrapping coders, for example:
-
-```ruby
-require 'coder_decorator/builder'
-CoderDecorator::Builder.build(:marshal, :base64)
-```
-
-is equivalent to:
-
-```ruby
-require 'coder_decorator/coders/marshal'
-require 'coder_decorator/coders/base64'
-CoderDecorator::Coders::Marshal.new(CoderDecorator::Coders::Base64.new)
-```
-
-Use array to pass arguments to the coder:
-
-```ruby
-CoderDecorator::Builder.build(:marshal, [:base64, {strict: true}])
-```
-
-Use `CoderDecorator.coder_names` to see all available coder names.
+Coders are listed in [lib/coder_decorator/coders](lib/coder_decorator/coders).
 
 ## Integration with Rack
 
 ```ruby
 require 'rack'
-require 'coder_decorator/builder'
+require 'coder_decorator'
 
 include CoderDecorator
 
@@ -82,11 +49,14 @@ app = lambda do |env|
   [200, {}, [session[:count].to_s]]
 end
 
-coder = CoderDecorator::Builder.build(
-  :marshal,
-  [:cipher, {secret: 'x' * 32}],
-  [:hmac, {secret: 'y' * 32}],
-  :rescue
+coder = Coders::Rescue.new(
+  Coders::HMAC.new(
+    Coders::Cipher.new(
+      Coders::JSON.new,
+      secret: 'x' * 32
+    ),
+    secret: 'y' * 32
+  )
 )
 
 app = Rack::Builder.app(app) do
