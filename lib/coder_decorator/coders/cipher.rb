@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require 'coder_decorator/coders/coder'
-require 'coder_decorator/coders/base64'
 require 'openssl'
 
 module CoderDecorator
@@ -14,8 +13,7 @@ module CoderDecorator
         super(coder)
         @secret = secret
         @old_secret = old_secret
-        @cipher = ::OpenSSL::Cipher.new(cipher)
-        @base64 = Coders::Base64.new
+        @cipher = OpenSSL::Cipher.new(cipher)
       end
 
       def encode(obj)
@@ -23,30 +21,23 @@ module CoderDecorator
         @cipher.key = @secret
         iv = @cipher.random_iv
         encrypted_data = @cipher.update(coder.encode(obj)) << @cipher.final
-        blob = "#{@base64.encode(encrypted_data)}--#{@base64.encode(iv)}"
-        @base64.encode(blob)
+        "#{[encrypted_data].pack('m0')}--#{[iv].pack('m0')}"
       end
 
-      def decode(str)
-        exception = nil
-        [@secret, @old_secret].each do |secret|
+      def decode(data)
+        secrets = [@old_secret, @secret]
+        until secrets.empty?
+          secret = secrets.pop
           begin
-            return decrypt(secret, str)
-          rescue => exception
-            next
+            encrypted_data, iv = data.split('--').map! { |v| v.unpack('m0').first }
+            @cipher.decrypt
+            @cipher.key = secret
+            @cipher.iv  = iv
+            return coder.decode(@cipher.update(encrypted_data) << @cipher.final)
+          rescue
+            secrets.empty? ? raise : next
           end
         end
-        raise exception
-      end
-
-      private
-
-      def decrypt(secret, data)
-        encrypted_data, iv = @base64.decode(data).split('--').map! { |v| @base64.decode(v) }
-        @cipher.decrypt
-        @cipher.key = secret
-        @cipher.iv  = iv
-        coder.decode(@cipher.update(encrypted_data) << @cipher.final)
       end
     end
   end
