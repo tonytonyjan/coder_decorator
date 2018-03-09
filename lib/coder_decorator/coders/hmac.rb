@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'coder_decorator/coders/coder'
 require 'openssl'
 
@@ -29,7 +30,7 @@ module CoderDecorator
 
       def decode(str)
         match_data = REGEXP.match(str)
-        data, hmac = match_data && match_data.captures
+        data, hmac = match_data&.captures
         secrets = [@secret, @old_secret]
         raise InvalidSignature unless data && hmac && secrets.any? { |secret| secure_compare(hmac, generate_hmac(secret, data)) }
         coder.decode(data)

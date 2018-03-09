@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rubocop/rake_task'
 require 'rake/testtask'
 require 'rake/packagetask'
@@ -6,7 +7,7 @@ require 'rubygems/package_task'
 require 'rdoc/task'
 
 desc 'Run linter and tests'
-task default: %i(rubocop test)
+task default: %i[rubocop test]
 
 RDoc::Task.new do |t|
   t.main = 'README.md'
@@ -18,6 +19,6 @@ Rake::TestTask.new do |t|
   t.libs << 'test'
 end
 
-spec_path = File.expand_path('../coder_decorator.gemspec', __FILE__)
+spec_path = File.expand_path('coder_decorator.gemspec', __dir__)
 spec = Gem::Specification.load(spec_path)
 Gem::PackageTask.new(spec).define

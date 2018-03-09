@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module CoderDecorator # :nodoc:
   module Coders # :nodoc:
     autoload :Base64, 'coder_decorator/coders/base64'

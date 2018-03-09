@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'coder_decorator/coders/coder'
 module CoderDecorator
   module Coders
@@ -10,7 +11,7 @@ module CoderDecorator
 
       def decode(obj)
         coder.decode(obj)
-      rescue
+      rescue StandardError
         nil
       end
     end

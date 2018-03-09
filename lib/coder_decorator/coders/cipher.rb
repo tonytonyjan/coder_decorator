@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'coder_decorator/coders/coder'
 require 'openssl'
 
@@ -34,7 +35,7 @@ module CoderDecorator
             @cipher.key = secret
             @cipher.iv  = iv
             return coder.decode(@cipher.update(encrypted_data) << @cipher.final)
-          rescue
+          rescue StandardError
             secrets.empty? ? raise : next
           end
         end
