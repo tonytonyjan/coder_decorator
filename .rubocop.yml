@@ -2,6 +2,7 @@ AllCops:
   TargetRubyVersion: 2.2
   Exclude:
     - 'pkg/**/*'
+    - 'examples/**/*'
 Metrics:
   Enabled: false
 Security/MarshalLoad:
