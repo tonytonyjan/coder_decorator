@@ -10,6 +10,8 @@ module CoderDecorator
     #     "#{data}--#{hmac}"
     #
     class HMAC < Coder
+      class InvalidSignature < StandardError; end
+
       REGEXP = /\A(.*)--(.*)\z/
 
       def initialize(coder = nil, secret:, old_secret: nil, digest: 'SHA1')
@@ -29,7 +31,7 @@ module CoderDecorator
         match_data = REGEXP.match(str)
         data, hmac = match_data && match_data.captures
         secrets = [@secret, @old_secret]
-        raise InvalidEncoding unless data && hmac && secrets.any? { |secret| secure_compare(hmac, generate_hmac(secret, data)) }
+        raise InvalidSignature unless data && hmac && secrets.any? { |secret| secure_compare(hmac, generate_hmac(secret, data)) }
         coder.decode(data)
       end
 

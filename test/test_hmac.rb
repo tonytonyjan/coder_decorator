@@ -22,7 +22,7 @@ class TestHMAC < Minitest::Test
   end
 
   def test_raise_error_if_it_cant_decode
-    assert_raises CoderDecorator::InvalidEncoding do
+    assert_raises Coders::HMAC::InvalidSignature do
       @coder.decode('invalid encoding')
     end
   end
